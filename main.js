@@ -35,18 +35,23 @@ function main() {
     cube.position.x = x;
 
     return cube;
-}
+  }
 
-  const material = new THREE.MeshPhongMaterial({color: 0x44aa88});  // greenish blue
-
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+  const cubes = [
+    makeInstance(geometry, 0x44aa88, 0),
+    makeInstance(geometry, 0x8844aa, -2),
+    makeInstance(geometry, 0xaa8844, 2),
+  ];
 
   function render(time) {
     time *= 0.001;  // convert time to seconds
    
-    cube.rotation.x = time;
-    cube.rotation.y = time;
+    cubes.forEach((cube, ndx) => {
+      const speed = 1 + ndx * .1;
+      const rot = time * speed;
+      cube.rotation.x = rot;
+      cube.rotation.y = rot;
+    });
    
     renderer.render(scene, camera);
    
